@@ -1,0 +1,24 @@
+# Dépendances
+# Celles-ci peuvent être réinstallées en utilisant `npm install` ou `yarn install`.
+/node_modules
+
+# Dossiers de build
+# Contient les fichiers générés pour la production.
+/build
+/dist
+
+# Fichiers de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables d'environnement
+# Ne jamais versionner les fichiers .env car ils peuvent contenir des informations sensibles.
+.env
+.env.local
+.env.*.local
+
+# Fichiers et dossiers d'éditeur de code et de système d'exploitation
+.idea
+.vscode
+.DS_Store
