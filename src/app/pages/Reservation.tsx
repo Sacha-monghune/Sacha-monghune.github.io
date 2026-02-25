@@ -11,6 +11,7 @@ export default function Reservation() {
   const [formData, setFormData] = useState({
     prenom: '',
     email: '',
+    telephone: '',
     questions: '',
   });
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -23,10 +24,17 @@ export default function Reservation() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    if (name === 'telephone') {
+      // Autorise uniquement les chiffres
+      const onlyDigits = value.replace(/\D/g, '');
+      setFormData({ ...formData, [name]: onlyDigits });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   if (showForm) {
@@ -47,7 +55,7 @@ export default function Reservation() {
               </div>
               <h2 className="text-3xl mb-4">Merci {formData.prenom} !</h2>
               <p className="text-gray-600 mb-6">
-                Votre demande de pré-réservation a bien été enregistrée. Nous vous contacterons très prochainement à l'adresse <strong>{formData.email}</strong> pour vous transmettre les détails du séjour et les prochaines étapes.
+                Votre demande de pré-réservation a bien été enregistrée. Nous vous contacterons très prochainement à l'adresse <strong>{formData.email}</strong> ou par téléphone au <strong>{formData.telephone}</strong> pour vous transmettre les détails du séjour et les prochaines étapes.
               </p>
               <Link
                 to="/"
@@ -93,6 +101,25 @@ export default function Reservation() {
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#354024] focus:border-transparent"
                     placeholder="votre@email.com"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="telephone" className="block text-sm mb-2 text-gray-700">
+                    Numéro de téléphone *
+                  </label>
+                  <input
+                    type="tel"
+                    id="telephone"
+                    name="telephone"
+                    required
+                    pattern="\d{10}"
+                    maxLength={10}
+                    title="Veuillez entrer un numéro de téléphone à 10 chiffres."
+                    value={formData.telephone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#354024] focus:border-transparent"
+                    placeholder="0612345678"
                   />
                 </div>
 
